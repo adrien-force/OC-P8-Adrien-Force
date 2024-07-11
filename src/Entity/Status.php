@@ -110,7 +110,7 @@ class Status
     {
         if (!$this->tasks->contains($task)) {
             $this->tasks->add($task);
-            $task->setStatusId($this);
+            $task->setStatus($this);
         }
 
         return $this;
@@ -120,8 +120,8 @@ class Status
     {
         if ($this->tasks->removeElement($task)) {
             // set the owning side to null (unless already changed)
-            if ($task->getStatusId() === $this) {
-                $task->setStatusId(null);
+            if ($task->getStatus() === $this) {
+                $task->setStatus(null);
             }
         }
 

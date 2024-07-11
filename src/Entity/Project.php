@@ -27,19 +27,19 @@ class Project
     #[ORM\Column(nullable: true)]
     private ?int $archive = null;
 
-    #[ORM\ManyToOne(inversedBy: 'projectId')]
+    #[ORM\ManyToOne(inversedBy: 'project')]
     private ?Status $status = null;
 
     /**
      * @var Collection<int, Tag>
      */
-    #[ORM\ManyToMany(targetEntity: Tag::class, mappedBy: 'projectId')]
+    #[ORM\ManyToMany(targetEntity: Tag::class, mappedBy: 'project')]
     private Collection $tags;
 
     /**
      * @var Collection<int, Task>
      */
-    #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'projectId')]
+    #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'project')]
     private Collection $tasks;
 
     /**
@@ -159,7 +159,7 @@ class Project
     {
         if (!$this->tasks->contains($task)) {
             $this->tasks->add($task);
-            $task->setProjectId($this);
+            $task->setProject($this);
         }
 
         return $this;
@@ -169,8 +169,8 @@ class Project
     {
         if ($this->tasks->removeElement($task)) {
             // set the owning side to null (unless already changed)
-            if ($task->getProjectId() === $this) {
-                $task->setProjectId(null);
+            if ($task->getProject() === $this) {
+                $task->setProject(null);
             }
         }
 

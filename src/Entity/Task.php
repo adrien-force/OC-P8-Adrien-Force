@@ -29,14 +29,14 @@ class Task
     private ?Timeslot $timeslot = null;
 
     #[ORM\ManyToOne(inversedBy: 'tasks')]
-    private ?Employe $employeId = null;
+    private ?Employe $employe = null;
 
     #[ORM\ManyToOne(inversedBy: 'tasks')]
-    private ?Status $statusId = null;
+    private ?Status $status = null;
 
-    #[ORM\ManyToOne(inversedBy: 'tasks')]
+    #[ORM\ManyToOne(targetEntity: Project::class, cascade: ['persist'], inversedBy: 'tasks')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Project $projectId = null;
+    private ?Project $project = null;
 
     /**
      * @var Collection<int, Tag>
@@ -107,38 +107,38 @@ class Task
         return $this;
     }
 
-    public function getEmployeId(): ?Employe
+    public function getEmploye(): ?Employe
     {
-        return $this->employeId;
+        return $this->employe;
     }
 
-    public function setEmployeId(?Employe $employeId): static
+    public function setEmploye(?Employe $employe): static
     {
-        $this->employeId = $employeId;
+        $this->employe = $employe;
 
         return $this;
     }
 
-    public function getStatusId(): ?Status
+    public function getStatus(): ?Status
     {
-        return $this->statusId;
+        return $this->status;
     }
 
-    public function setStatusId(?Status $statusId): static
+    public function setStatus(?Status $status): static
     {
-        $this->statusId = $statusId;
+        $this->status = $status;
 
         return $this;
     }
 
-    public function getProjectId(): ?Project
+    public function getProject(): ?Project
     {
-        return $this->projectId;
+        return $this->project;
     }
 
-    public function setProjectId(?Project $projectId): static
+    public function setProject(?Project $project): static
     {
-        $this->projectId = $projectId;
+        $this->project = $project;
 
         return $this;
     }

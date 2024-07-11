@@ -170,7 +170,7 @@ class Employe
     {
         if (!$this->tasks->contains($task)) {
             $this->tasks->add($task);
-            $task->setEmployeId($this);
+            $task->setEmploye($this);
         }
 
         return $this;
@@ -180,8 +180,8 @@ class Employe
     {
         if ($this->tasks->removeElement($task)) {
             // set the owning side to null (unless already changed)
-            if ($task->getEmployeId() === $this) {
-                $task->setEmployeId(null);
+            if ($task->getEmploye() === $this) {
+                $task->setEmploye(null);
             }
         }
 
