@@ -35,8 +35,9 @@ final class StatusFactory extends PersistentProxyObjectFactory{
     protected function defaults(): array|callable
     {
         return [
-            'name' => self::faker()->text(255),
-            'tag' => self::faker()->text(255),
+            //i'd like to create 3 status : TODO DOING AND DONE
+            'name' => self::faker()->randomElement(['TODO', 'DOING', 'DONE']),
+            'tag' => self::faker()->text(10),
         ];
     }
 

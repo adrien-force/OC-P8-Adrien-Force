@@ -37,8 +37,9 @@ final class ProjectFactory extends PersistentProxyObjectFactory{
         return [
             'archived' => self::faker()->boolean(),
             'deadline' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
-            'name' => self::faker()->text(255),
+            'name' => self::faker()->text(10),
             'startAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
+            'employes' => self::faker()->randomElements(EmployeFactory::repository()->findAll(), self::faker()->numberBetween(1, 5)),
         ];
     }
 

@@ -34,9 +34,13 @@
                                             <div class="task-deadline">
                                                 <i class="fa-regular fa-calendar"></i> {{ task.deadline|date('d/m/Y') }}
                                             </div>
+                                            {% if task.employe %}
                                             <div class="mini-user">
-                                                {{ task.employe.lastname }} {# TODO Show ico instead #}
+                                                {{ task.employe.lastname}} {# TODO Show ico instead #}
                                             </div>
+                                            {% else %}
+                                            <i class="fa fa-xmark"></i>
+                                            {% endif %}
                                         </div>
                                     </a>
                                 {% endfor %}

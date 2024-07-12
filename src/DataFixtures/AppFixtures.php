@@ -17,7 +17,7 @@ class AppFixtures extends Fixture
     {
         EmployeFactory::createMany(10);
         ProjectFactory::createMany(10);
-        StatusFactory::createMany(10);
+        StatusFactory::createMany(3);
         TagFactory::createMany(10);
         TaskFactory::createMany(10);
         TimeslotFactory::createMany(10);
