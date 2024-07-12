@@ -27,30 +27,30 @@ class ProjectController extends AbstractController
         ]);
     }
 
-    #[Route('/project/{id}', name: 'app_project_show', requirements: ['id' => '\d+'])]
+    #[Route('/project/{projectId}', name: 'app_project_show', requirements: ['projectId' => '\d+'])]
     public function show
     (
         ProjectRepository $projectRepository,
         StatusRepository  $statusRepository,
-        int               $id,
+        int               $projectId,
     ): Response
     {
-        if (!$projectRepository->find($id) ||
+        if (!$projectRepository->find($projectId) ||
             !$statusRepository->findAll()) {
             return $this->redirectToRoute('app_project');
         }
 
         return $this->render('project/project.html.twig', [
             'controller_name' => 'ProjectController',
-            'project' => $projectRepository->find($id),
+            'project' => $projectRepository->find($projectId),
             'status' => $statusRepository->findAll()
         ]);
     }
 
-    #[Route('/project/{id}/remove', name: 'app_project_remove')]
-    public function remove(ProjectRepository $projectRepository, int $id, EntityManagerInterface $em): Response
+    #[Route('/project/{projectId}/remove', name: 'app_project_remove')]
+    public function remove(ProjectRepository $projectRepository, int $projectId, EntityManagerInterface $em): Response
     {
-        $project = $projectRepository->find($id);
+        $project = $projectRepository->find($projectId);
         if (!$project) {
             return $this->redirectToRoute('app_project');
         }
@@ -77,7 +77,7 @@ class ProjectController extends AbstractController
             $em->persist($project);
             $em->flush();
 
-            return $this->redirectToRoute('app_project_show', ['id' => $projectId]);
+            return $this->redirectToRoute('app_project_show', ['projectId' => $projectId]);
         }
         return $this->render('project/edit.html.twig', [
             'form' => $form->createView(),
