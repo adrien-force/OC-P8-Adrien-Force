@@ -9,7 +9,13 @@
             <header>
                 <div id="current-user"></div>
                 <div id="title-page">
-                    <h1>{{ employe.fullname }}</h1>
+                    <h1>
+                        {% if employe.lastname and employe.firstname %}
+                        {{ employe.fullname }}
+                        {% else %}
+                        Ajouter un collaborateur
+                        {% endif %}
+                    </h1>
                 </div>
             </header>
             <div id="content">
