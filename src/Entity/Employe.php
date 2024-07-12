@@ -25,6 +25,7 @@ class Employe
     private ?string $email = null;
 
     #[ORM\Column]
+    #[ORM\JoinColumn(nullable: true)]
     private ?int $role = null;
 
     #[ORM\Column(length: 255)]

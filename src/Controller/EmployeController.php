@@ -39,6 +39,7 @@ class EmployeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($employe);
             $em->flush();
+            $this->addFlash('success', 'Le collaborateur a bien été mis à jour.');
 
             //Show a popup message to confirm the update to the user
         }
