@@ -59,14 +59,14 @@ class ProjectController extends AbstractController
         return $this->redirectToRoute('app_project');
     }
 
-    #[Route('/project/edit/{id}', name: 'app_project_edit')]
+    #[Route('/project/edit/{projectId}', name: 'app_project_edit')]
     public function edit(
         ProjectRepository      $projectRepository,
-        int                    $id,
+        int                    $projectId,
         EntityManagerInterface $em,
         Request                $request,
     ): Response {
-        $project = $projectRepository->find($id);
+        $project = $projectRepository->find($projectId);
         if (!$project) {
             throw $this->createNotFoundException('The project does not exist');
         }
@@ -77,7 +77,7 @@ class ProjectController extends AbstractController
             $em->persist($project);
             $em->flush();
 
-            return $this->redirectToRoute('app_project_show', ['id' => $id]);
+            return $this->redirectToRoute('app_project_show', ['id' => $projectId]);
         }
         return $this->render('project/edit.html.twig', [
             'form' => $form->createView(),

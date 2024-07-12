@@ -22,24 +22,25 @@ class TaskController extends AbstractController
         ]);
     }
 
-    #[Route('/task/add/{id}', name: 'app_task_add')]
+    #[Route('/task/edit/{projectId}/{taskId}', name: 'app_task_edit')]
     public function add
     (
         Request        $request,
         EntityManagerInterface $em,
-        int            $id = null
+        int            $taskId = null,
+        int            $projectId = null
     )
     {
-        $task = new Task();
-        $project = $em->getRepository(Project::class)->find($id);
+        $task = $taskId ? $em->getRepository(Task::class)->find($taskId) : new Task();
+        $project = $em->getRepository(Project::class)->find($projectId);
         $task->setProject($project);
+
         $form = $this->createForm(TaskAddType::class, $task);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($task);
             $em->flush();
-//            $this->addFlash('success', 'La tâche a bien été ajouté.');
             $this->redirectToRoute('app_project_show', ['id' => $task->getId()]);
         }
 
