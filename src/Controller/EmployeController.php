@@ -22,8 +22,8 @@ class EmployeController extends AbstractController
         ]);
     }
 
-    #[Route('/employe/edit/{id}', name: 'app_employe_edit', requirements: ['id' => '\d+'])]
-    public function show
+    #[Route('/employe/edit/{id}', name: 'app_employe_edit')]
+    public function edit
     (
         EmployeRepository      $employeRepository,
         Request                $request,
