@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <!DOCTYPE html>
+    <html lang="fr">
+    <body>
+    <div id="main-container">
+        {{ include('partials/nav.html.twig') }}
+        <main>
+            <header>
+                <div id="current-user"></div>
+                <div id="title-page">
+                    <h1>{{ employe.fullname }}</h1>
+                </div>
+            </header>
+            <div id="content">
+                {{ form_start(form) }}
+                <form name="employe" method="post">
+                    <div>
+                        {{ form_label(form.lastname, 'Nom') }}
+                        {{ form_widget(form.lastname) }}
+                        <div class="form-error-message">
+                            {{ form_errors(form.lastname) }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(form.firstname, 'Prénom') }}
+                        {{ form_widget(form.firstname) }}
+                        <div class="form-error-message">
+                            {{ form_errors(form.firstname) }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(form.email, 'Email') }}
+                        {{ form_widget(form.email) }}
+                        <div class="form-error-message">
+                            {{ form_errors(form.email) }}
+                        </div>
+                    </div>
+                    <div class="form-flex">
+                        <div>
+                            {{ form_label(form.arrivalAt, 'Date d\'arrivée') }}
+                            {{ form_widget(form.arrivalAt) }}
+                            <div class="form-error-message">
+                                {{ form_errors(form.arrivalAt) }}
+                            </div>
+                        </div>
+                        <div>
+                            {{ form_label(form.contract, 'Statut') }}
+                            {{ form_widget(form.contract) }}
+                            <div class="form-error-message">
+                                {{ form_errors(form.contract) }}
+                            </div>
+                        </div>
+                    </div>
+                    <button class="button button-submit">Enregistrer</button>
+                </form>
+                {{ form_end(form) }}
+            </div>
+        </main>
+    </div>
+    </body>
+    </html>
+{% endblock %}
