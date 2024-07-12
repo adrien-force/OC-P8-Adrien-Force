@@ -12,8 +12,9 @@
                     <div class="flex-header">
                         <h1> {{ project.name }}</h1>
                         <div class="user-list">
-                            <div class="avatar">ND</div> {# TODO check for user associated #}
-                            <div class="avatar">DB</div>
+                            {% for employe in project.employes %}
+                            <div class="avatar"> {{ employe.initials }}</div>
+                            {% endfor %}
                         </div>
                         <a class="button" href=" {{ path('app_project_edit', {id: project.id}) }}">Modifier</a>
                     </div>

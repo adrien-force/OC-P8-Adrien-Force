@@ -40,13 +40,13 @@ class ProjectEditType extends AbstractType
             ])
             ->add('tags', EntityType::class, [
                 'class' => Tag::class,
-                'choice_label' => 'id',
+                'choice_label' => 'tag',
                 'multiple' => true,
                 'required' => false,
             ])
             ->add('employes', EntityType::class, [
                 'class' => Employe::class,
-                'choice_label' => 'id',
+                'choice_label' => 'fullname',
                 'multiple' => true,
                 'required' => false,
             ]);

@@ -212,9 +212,14 @@ class Employe
         return $this;
     }
 
-    public function fullName(): string
+    public function getFullName(): string
     {
         return $this->firstname . ' ' . $this->lastname;
+    }
+
+    public function getInitials(): string
+    {
+        return strtoupper($this->firstname[0] . $this->lastname[0]);
     }
 
 }
