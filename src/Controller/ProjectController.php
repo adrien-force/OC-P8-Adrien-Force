@@ -59,29 +59,29 @@ class ProjectController extends AbstractController
         return $this->redirectToRoute('app_project');
     }
 
-//    #[Route('/project/{id}/edit', name: 'app_project_edit')]
-//    public function edit
-//    (
-//        ProjectRepository $projectRepository,
-//        int $id,
-//        EntityManagerInterface $em,
-//        Request $request,
-//    ): Response
-//    {
-//        $project = $projectRepository->find($id);
-//        $form = $this->createForm(ProjectAddType::class, $project);
-//        $form->handleRequest($request);
-//
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            $em->persist($project);
-//            $em->flush();
-//            return $this->redirectToRoute('app_project_show', ['id' => $id]);
-//        }
-//
-//        return $this->render('project/add.html.twig', [
-//            'form' => $form->createView(),
-//        ]);
-//    }
+    #[Route('/project/{id}/edit', name: 'app_project_edit')]
+    public function edit
+    (
+        ProjectRepository $projectRepository,
+        int $id,
+        EntityManagerInterface $em,
+        Request $request,
+    ): Response
+    {
+        $project = $projectRepository->find($id);
+        $form = $this->createForm(ProjectAddType::class, $project);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($project);
+            $em->flush();
+            return $this->redirectToRoute('app_project_show', ['id' => $id]);
+        }
+
+        return $this->render('project/add.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
 
     #[Route('/project/add', name: 'app_project_add')]
     public function add
@@ -97,7 +97,7 @@ class ProjectController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($project);
             $em->flush();
-            return $this->redirectToRoute('app_project_show'); //TODO redirect to project show id
+            return $this->redirectToRoute('app_project'); //TODO redirect to project show id
         }
 
         return $this->render('project/add.html.twig', [
