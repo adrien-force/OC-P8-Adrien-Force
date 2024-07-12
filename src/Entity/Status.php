@@ -25,17 +25,17 @@ class Status
      * @var Collection<int, Project>
      */
     #[ORM\OneToMany(targetEntity: Project::class, mappedBy: 'status')]
-    private Collection $projectId;
+    private Collection $project;
 
     /**
      * @var Collection<int, Task>
      */
-    #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'statusId')]
+    #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'status')]
     private Collection $tasks;
 
     public function __construct()
     {
-        $this->projectId = new ArrayCollection();
+        $this->project = new ArrayCollection();
         $this->tasks = new ArrayCollection();
     }
 
@@ -71,27 +71,27 @@ class Status
     /**
      * @return Collection<int, Project>
      */
-    public function getProjectId(): Collection
+    public function getProject(): Collection
     {
-        return $this->projectId;
+        return $this->project;
     }
 
-    public function addProjectId(Project $projectId): static
+    public function addProject(Project $project): static
     {
-        if (!$this->projectId->contains($projectId)) {
-            $this->projectId->add($projectId);
-            $projectId->setStatus($this);
+        if (!$this->project->contains($project)) {
+            $this->project->add($project);
+            $project->setStatus($this);
         }
 
         return $this;
     }
 
-    public function removeProjectId(Project $projectId): static
+    public function removeProject(Project $project): static
     {
-        if ($this->projectId->removeElement($projectId)) {
+        if ($this->project->removeElement($project)) {
             // set the owning side to null (unless already changed)
-            if ($projectId->getStatus() === $this) {
-                $projectId->setStatus(null);
+            if ($project->getStatus() === $this) {
+                $project->setStatus(null);
             }
         }
 

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Project;
 use App\Form\ProjectAddType;
+use App\Form\ProjectEditType;
 use App\Repository\EmployeRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\StatusRepository;
@@ -16,9 +17,8 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class ProjectController extends AbstractController
 {
-    #[Route('/' , name: 'app_project')]
-    #[Route('/index' , name: 'app_project_index')]
-
+    #[Route('/', name: 'app_project')]
+    #[Route('/index', name: 'app_project_index')]
     public function index(ProjectRepository $projectRepository): Response
     {
         return $this->render('project/index.html.twig', [
@@ -31,8 +31,8 @@ class ProjectController extends AbstractController
     public function show
     (
         ProjectRepository $projectRepository,
-        StatusRepository $statusRepository,
-        int $id,
+        StatusRepository  $statusRepository,
+        int               $id,
     ): Response
     {
         if (!$projectRepository->find($id) ||
@@ -59,34 +59,38 @@ class ProjectController extends AbstractController
         return $this->redirectToRoute('app_project');
     }
 
-    #[Route('/project/{id}/edit', name: 'app_project_edit')]
-    public function edit
-    (
-        ProjectRepository $projectRepository,
-        int $id,
+    #[Route('/project/edit/{id}', name: 'app_project_edit')]
+    public function edit(
+        ProjectRepository      $projectRepository,
+        int                    $id,
         EntityManagerInterface $em,
-        Request $request,
-    ): Response
-    {
+        Request                $request,
+    ): Response {
         $project = $projectRepository->find($id);
-        $form = $this->createForm(ProjectAddType::class, $project);
+        if (!$project) {
+            throw $this->createNotFoundException('The project does not exist');
+        }
+        $form = $this->createForm(ProjectEditType::class, $project);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($project);
             $em->flush();
+
             return $this->redirectToRoute('app_project_show', ['id' => $id]);
         }
-
-        return $this->render('project/add.html.twig', [
+        return $this->render('project/edit.html.twig', [
             'form' => $form->createView(),
+            'project' => $project,
         ]);
     }
+
+
 
     #[Route('/project/add', name: 'app_project_add')]
     public function add
     (
-        Request $request,
+        Request                $request,
         EntityManagerInterface $em,
     ): Response
     {

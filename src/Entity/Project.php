@@ -132,7 +132,7 @@ class Project
     {
         if (!$this->tags->contains($tag)) {
             $this->tags->add($tag);
-            $tag->addProjectId($this);
+            $tag->addProject($this);
         }
 
         return $this;
@@ -141,7 +141,7 @@ class Project
     public function removeTag(Tag $tag): static
     {
         if ($this->tags->removeElement($tag)) {
-            $tag->removeProjectId($this);
+            $tag->removeProject($this);
         }
 
         return $this;
@@ -192,6 +192,14 @@ class Project
             $employe->addProject($this);
         }
 
+        return $this;
+    }
+
+    public function setEmployes(Collection $employes): static
+    {
+        for ($i = 0; $i < $employes->count(); $i++) {
+            $this->addEmploye($employes->get($i));
+        }
         return $this;
     }
 

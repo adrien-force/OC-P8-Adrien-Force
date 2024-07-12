@@ -37,7 +37,7 @@ final class TimeslotFactory extends PersistentProxyObjectFactory{
         return [
             'start' => self::faker()->dateTime(),
             'stopAt' => self::faker()->dateTime(),
-            'taskId' => TaskFactory::new(),
+            'task' => TaskFactory::new(),
         ];
     }
 

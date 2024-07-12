@@ -16,7 +16,7 @@ class Timeslot
 
     #[ORM\OneToOne(inversedBy: 'timeslot', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Task $taskId = null;
+    private ?Task $task = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $start = null;
@@ -29,14 +29,14 @@ class Timeslot
         return $this->id;
     }
 
-    public function getTaskId(): ?Task
+    public function getTask(): ?Task
     {
-        return $this->taskId;
+        return $this->task;
     }
 
-    public function setTaskId(Task $taskId): static
+    public function setTask(Task $task): static
     {
-        $this->taskId = $taskId;
+        $this->task = $task;
 
         return $this;
     }

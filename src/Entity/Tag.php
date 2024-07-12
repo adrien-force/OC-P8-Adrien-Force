@@ -22,7 +22,7 @@ class Tag
      * @var Collection<int, Project>
      */
     #[ORM\ManyToMany(targetEntity: Project::class, inversedBy: 'tags')]
-    private Collection $projectId;
+    private Collection $project;
 
     /**
      * @var Collection<int, Task>
@@ -32,7 +32,7 @@ class Tag
 
     public function __construct()
     {
-        $this->projectId = new ArrayCollection();
+        $this->project = new ArrayCollection();
         $this->tasks = new ArrayCollection();
     }
 
@@ -56,23 +56,23 @@ class Tag
     /**
      * @return Collection<int, Project>
      */
-    public function getProjectId(): Collection
+    public function getProject(): Collection
     {
-        return $this->projectId;
+        return $this->project;
     }
 
-    public function addProjectId(Project $projectId): static
+    public function addProject(Project $project): static
     {
-        if (!$this->projectId->contains($projectId)) {
-            $this->projectId->add($projectId);
+        if (!$this->project->contains($project)) {
+            $this->project->add($project);
         }
 
         return $this;
     }
 
-    public function removeProjectId(Project $projectId): static
+    public function removeProject(Project $project): static
     {
-        $this->projectId->removeElement($projectId);
+        $this->project->removeElement($project);
 
         return $this;
     }

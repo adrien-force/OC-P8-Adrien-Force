@@ -6,6 +6,7 @@ use App\Entity\Employe;
 use App\Entity\Project;
 use App\Entity\Status;
 use App\Entity\Tag;
+use App\Repository\EmployeRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -19,10 +20,12 @@ class ProjectEditType extends AbstractType
         $builder
             ->add('name')
             ->add('startAt', null, [
-                'widget' => 'single_text'
+                'widget' => 'single_text',
+                'required' => false,
             ])
             ->add('deadline', null, [
-                'widget' => 'single_text'
+                'widget' => 'single_text',
+                'required' => false,
             ])
             ->add('archived',
                 CheckboxType::class,
@@ -33,16 +36,19 @@ class ProjectEditType extends AbstractType
             ->add('status', EntityType::class, [
                 'class' => Status::class,
                 'choice_label' => 'name',
+                'required' => false,
             ])
             ->add('tags', EntityType::class, [
                 'class' => Tag::class,
                 'choice_label' => 'id',
                 'multiple' => true,
+                'required' => false,
             ])
             ->add('employes', EntityType::class, [
                 'class' => Employe::class,
-                'choice_label' => 'fullname',
+                'choice_label' => 'id',
                 'multiple' => true,
+                'required' => false,
             ]);
     }
 

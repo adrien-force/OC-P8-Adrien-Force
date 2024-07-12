@@ -42,7 +42,7 @@ class Employe
     /**
      * @var Collection<int, Task>
      */
-    #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'employeId')]
+    #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'employe')]
     private Collection $tasks;
 
     /**
@@ -216,4 +216,5 @@ class Employe
     {
         return $this->firstname . ' ' . $this->lastname;
     }
+
 }
