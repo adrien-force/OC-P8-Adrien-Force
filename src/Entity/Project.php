@@ -24,8 +24,8 @@ class Project
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $deadline = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $archive = null;
+    #[ORM\Column(nullable: false)]
+    private bool $archived = false;
 
     #[ORM\ManyToOne(inversedBy: 'project')]
     private ?Status $status = null;
@@ -96,14 +96,14 @@ class Project
         return $this;
     }
 
-    public function getArchive(): ?int
+    public function getArchived(): bool
     {
-        return $this->archive;
+        return $this->archived;
     }
 
-    public function setArchive(?int $archive): static
+    public function setArchived(bool $archived): static
     {
-        $this->archive = $archive;
+        $this->archived = $archived;
 
         return $this;
     }

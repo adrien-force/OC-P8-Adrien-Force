@@ -211,4 +211,9 @@ class Employe
 
         return $this;
     }
+
+    public function fullName(): string
+    {
+        return $this->firstname . ' ' . $this->lastname;
+    }
 }

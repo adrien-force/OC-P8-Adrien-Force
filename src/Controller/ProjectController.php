@@ -2,11 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Project;
+use App\Form\ProjectAddType;
+use App\Repository\EmployeRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\StatusRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -23,7 +27,7 @@ class ProjectController extends AbstractController
         ]);
     }
 
-    #[Route('/project/{id}', name: 'app_project_show')]
+    #[Route('/project/{id}', name: 'app_project_show', requirements: ['id' => '\d+'])]
     public function show
     (
         ProjectRepository $projectRepository,
@@ -55,24 +59,50 @@ class ProjectController extends AbstractController
         return $this->redirectToRoute('app_project');
     }
 
-    #[Route('/project/{id}/edit', name: 'app_project_edit')]
-    public function edit(ProjectRepository $projectRepository, int $id, EntityManagerInterface $em): Response
-    {
-        $project = $projectRepository->find($id);
-        if (!$project) {
-            return $this->redirectToRoute('app_project');
-        }
-
-        //form
-
-        $em->persist($project);
-        $em->flush();
-        return $this->redirectToRoute('app_project');
-    }
+//    #[Route('/project/{id}/edit', name: 'app_project_edit')]
+//    public function edit
+//    (
+//        ProjectRepository $projectRepository,
+//        int $id,
+//        EntityManagerInterface $em,
+//        Request $request,
+//    ): Response
+//    {
+//        $project = $projectRepository->find($id);
+//        $form = $this->createForm(ProjectAddType::class, $project);
+//        $form->handleRequest($request);
+//
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            $em->persist($project);
+//            $em->flush();
+//            return $this->redirectToRoute('app_project_show', ['id' => $id]);
+//        }
+//
+//        return $this->render('project/add.html.twig', [
+//            'form' => $form->createView(),
+//        ]);
+//    }
 
     #[Route('/project/add', name: 'app_project_add')]
-    public function add(EntityManagerInterface $em): Response
+    public function add
+    (
+        Request $request,
+        EntityManagerInterface $em,
+    ): Response
     {
-        //
+        $project = new Project();
+        $form = $this->createForm(ProjectAddType::class, $project);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($project);
+            $em->flush();
+            return $this->redirectToRoute('app_project_show'); //TODO redirect to project show id
+        }
+
+        return $this->render('project/add.html.twig', [
+            'form' => $form->createView(),
+        ]);
+
     }
 }

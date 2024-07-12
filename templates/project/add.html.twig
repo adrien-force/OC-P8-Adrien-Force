@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <!DOCTYPE html>
+    <html lang="fr">
+    <body>
+    <div id="main-container">
+        {{ include('partials/nav.html.twig') }}
+        <main>
+            <header>
+                <div id="current-user"></div>
+                <div id="title-page">
+                    <h1>Nouveau projet</h1>
+                </div>
+            </header>
+            <div id="content">
+                {{ form_start(form) }}
+                <form name="projet" method="post">
+                    <div>
+                        <label for="projet_nom" class="required">
+                            {{ form_label(form.name, 'Titre du projet') }}
+                            {{ form_widget(form.name) }}
+                            <div class="form-error-message">
+                                {{ form_errors(form.name) }}
+                            </div>
+                        </label>
+                    </div>
+                    <div>
+                        {{ form_label(form.employes, 'Inviter des membres') }}
+                        {{ form_widget(form.employes) }}
+                        <div class="form-error-message">
+                            {{ form_errors(form.employes) }}
+                        </div>
+                    </div>
+                    <br>
+                    <div>
+                        {{ form_label(form.startAt, 'Date de début') }}
+                        {{ form_widget(form.startAt) }}
+                        <div class="form-error-message">
+                            {{ form_errors(form.startAt) }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(form.deadline, 'Date de fin') }}
+                        {{ form_widget(form.deadline) }}
+                        <div class="form-error-message">
+                            {{ form_errors(form.deadline) }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(form.status, 'Statut') }}
+                        {{ form_widget(form.status) }}
+                        <div class="form-error-message">
+                            {{ form_errors(form.status) }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(form.tags, 'Tags') }}
+                        {{ form_widget(form.tags) }}
+                        <div class="form-error-message">
+                            {{ form_errors(form.tags) }}
+                        </div>
+                    </div>
+                    <br>
+{#                    <div>#}
+{#                        {{ form_label(form.archived, 'Archivé') }}#}
+{#                        {{ form_widget(form.archived) }}#}
+{#                        <div class="form-error-message">#}
+{#                            {{ form_errors(form.archived) }}#}
+{#                        </div>#}
+{#                    </div>#}
+                    <br>
+                    <button class="button button-submit">Continuer</button>
+                </form>
+                {{ form_end(form) }}
+            </div>
+        </main>
+    </div>
+    </body>
+    </html>
+{% endblock %}
