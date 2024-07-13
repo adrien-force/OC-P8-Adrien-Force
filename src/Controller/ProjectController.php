@@ -75,7 +75,7 @@ class ProjectController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($project);
-            $em->flush();
+            $em->flush(); //FIXME issue with employe persist come from here
 
             return $this->redirectToRoute('app_project_show', ['projectId' => $projectId]);
         }

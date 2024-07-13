@@ -39,11 +39,13 @@ class ProjectAddType extends AbstractType
                 'class' => Tag::class,
                 'choice_label' => 'id',
                 'multiple' => true,
+                'by_reference' => false,
             ])
             ->add('employes', EntityType::class, [
                 'class' => Employe::class,
                 'choice_label' => 'fullname',
                 'multiple' => true,
+                'by_reference' => false,
             ]);
     }
 

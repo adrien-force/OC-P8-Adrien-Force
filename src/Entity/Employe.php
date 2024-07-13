@@ -49,7 +49,7 @@ class Employe
     /**
      * @var Collection<int, Project>
      */
-    #[ORM\ManyToMany(targetEntity: Project::class, inversedBy: 'employes')]
+    #[ORM\ManyToMany(targetEntity: Project::class, inversedBy: 'employes', cascade: ['persist'])]
     private Collection $projects;
 
     public function __construct()

@@ -45,7 +45,7 @@ class Project
     /**
      * @var Collection<int, Employe>
      */
-    #[ORM\ManyToMany(targetEntity: Employe::class, mappedBy: 'projects')]
+    #[ORM\ManyToMany(targetEntity: Employe::class, mappedBy: 'projects', cascade: ['persist'])]
     private Collection $employes;
 
     public function __construct()
@@ -192,14 +192,6 @@ class Project
             $employe->addProject($this);
         }
 
-        return $this;
-    }
-
-    public function setEmployes(Collection $employes): static
-    {
-        for ($i = 0; $i < $employes->count(); $i++) {
-            $this->addEmploye($employes->get($i));
-        }
         return $this;
     }
 
