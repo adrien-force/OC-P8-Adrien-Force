@@ -22,7 +22,7 @@ class TaskController extends AbstractController
         ]);
     }
 
-    #[Route('/task/edit/{projectId}/{taskId}', name: 'app_task_edit')]
+    #[Route('/task/edit/{projectId}/{taskId}', name: 'app_project_task_edit')]
     public function add
     (
         Request        $request,
