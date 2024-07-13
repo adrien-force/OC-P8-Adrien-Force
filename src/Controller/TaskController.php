@@ -41,7 +41,7 @@ class TaskController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($task);
             $em->flush();
-            $this->redirectToRoute('app_project_show', ['id' => $task->getId()]);
+            $this->redirectToRoute('app_project_show', ['projectId' => $task->getId()]);
         }
 
         return $this->render('task/add.html.twig', [

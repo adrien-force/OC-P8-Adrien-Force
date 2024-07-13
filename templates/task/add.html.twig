@@ -9,7 +9,13 @@
             <header>
                 <div id="current-user"></div>
                 <div id="title-page">
-                    <h1>Créer une tâche</h1>
+                    <h1>
+                        {% if task.title %}
+                        {{ task.title }}
+                        {% else %}
+                        Créer une tâche
+                        {% endif %}
+                    </h1>
                 </div>
             </header>
             <div id="content">
