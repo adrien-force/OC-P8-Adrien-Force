@@ -41,12 +41,26 @@ class TaskController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($task);
             $em->flush();
-            $this->redirectToRoute('app_project_show', ['projectId' => $task->getId()]);
+            $this->redirectToRoute('app_project_show', ['projectId' => $projectId]);
         }
 
         return $this->render('task/add.html.twig', [
             'form' => $form->createView(),
             'task' => $task
         ]);
+    }
+
+    #[Route('/task/delete/{taskId}', name: 'app_task_delete')]
+    public function delete
+    (
+        EntityManagerInterface $em,
+        int            $taskId
+    ) : Response
+    {
+        $task = $em->getRepository(Task::class)->find($taskId);
+        $projectId = $task->getProject()->getId();
+        $em->remove($task);
+        $em->flush();
+        return $this->redirectToRoute('app_project_show', ['projectId' => $projectId]);
     }
 }

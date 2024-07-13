@@ -10,7 +10,7 @@
                 <div id="current-user"></div>
                 <div id="title-page">
                     <h1>
-                        {% if task.title %}
+                        {% if task.id %}
                         {{ task.title }}
                         {% else %}
                         Créer une tâche
@@ -62,6 +62,10 @@
                     </div>
                     <br>
                     <button class="button button-submit">Ajouter</button>
+                    {% if task.id %}
+                        <br>
+                        <a href="{{ path('app_task_delete', {'taskId': task.id}) }}" class="delete-task">Supprimer la tâche </a>
+                    {% endif %}
                 </form>
                 {{ form_end(form) }}
             </div>
