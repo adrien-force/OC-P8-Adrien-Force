@@ -35,7 +35,7 @@ final class TagFactory extends PersistentProxyObjectFactory{
     protected function defaults(): array|callable
     {
         return [
-            'tag' => self::faker()->text(255),
+            'tag' => self::faker()->word(),
         ];
     }
 

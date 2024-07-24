@@ -32,6 +32,7 @@ class TaskController extends AbstractController
     )
     {
         $task = $taskId ? $em->getRepository(Task::class)->find($taskId) : new Task();
+        
         $project = $em->getRepository(Project::class)->find($projectId);
         $task->setProject($project);
 

@@ -6,7 +6,6 @@ use App\Entity\Employe;
 use App\Entity\Project;
 use App\Entity\Status;
 use App\Entity\Tag;
-use App\Repository\EmployeRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;

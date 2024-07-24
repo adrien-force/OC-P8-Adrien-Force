@@ -40,6 +40,8 @@ class ProjectController extends AbstractController
             return $this->redirectToRoute('app_project');
         }
 
+
+
         return $this->render('project/project.html.twig', [
             'controller_name' => 'ProjectController',
             'project' => $projectRepository->find($projectId),
@@ -75,7 +77,7 @@ class ProjectController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($project);
-            $em->flush(); //FIXME issue with employe persist come from here
+            $em->flush();
 
             return $this->redirectToRoute('app_project_show', ['projectId' => $projectId]);
         }

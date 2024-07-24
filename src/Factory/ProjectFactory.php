@@ -1,55 +1,44 @@
 <?php
-
 namespace App\Factory;
 
 use App\Entity\Project;
-use App\Repository\ProjectRepository;
-use Doctrine\ORM\EntityRepository;
-use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
-use Zenstruck\Foundry\Persistence\Proxy;
-use Zenstruck\Foundry\Persistence\ProxyRepositoryDecorator;
+use Zenstruck\Foundry\ModelFactory;
+use Zenstruck\Foundry\Proxy;
 
-/**
- * @extends PersistentProxyObjectFactory<Project>
- */
-final class ProjectFactory extends PersistentProxyObjectFactory{
-    /**
-     * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services
-     *
-     * @todo inject services if required
-     */
-    public function __construct()
+final class ProjectFactory extends ModelFactory
+{
+    protected function getDefaults(): array
     {
+        return [
+            'name' => self::faker()->word(),
+            'startAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
+            'deadline' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
+            'archived' => self::faker()->boolean(),
+            'tasks' => TaskFactory::new()->many(3),
+            'status' => StatusFactory::randomOrCreate(),
+//            'employes' => EmployeFactory::randomOrCreate(),
+//            'tags' => TagFactory::randomOrCreate(),
+        ];
     }
 
-    public static function class(): string
+    protected static function getClass(): string
     {
         return Project::class;
     }
 
-    /**
-     * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories
-     *
-     * @todo add your default values here
-     */
-    protected function defaults(): array|callable
+    protected function initialize(): self
     {
-        return [
-            'archived' => self::faker()->boolean(),
-            'deadline' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
-            'name' => self::faker()->text(10),
-            'startAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
-            'employes' => self::faker()->randomElements(EmployeFactory::repository()->findAll(), self::faker()->numberBetween(1, 5)),
-        ];
-    }
+        return $this->afterInstantiate(function(Project $project): void {
+            $employes = EmployeFactory::randomRange(2, 4);
+            foreach ($employes as $employe) {
+                $project->addEmploye($employe->object());
+            }
 
-    /**
-     * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#initialization
-     */
-    protected function initialize(): static
-    {
-        return $this
-            // ->afterInstantiate(function(Project $project): void {})
-        ;
+            $tags = TagFactory::randomRange(1, 3);
+            foreach ($tags as $tag) {
+                $project->addTag($tag->object());
+            }
+
+        });
     }
 }

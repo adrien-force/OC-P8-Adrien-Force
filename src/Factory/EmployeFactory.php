@@ -35,14 +35,14 @@ final class EmployeFactory extends PersistentProxyObjectFactory{
     protected function defaults(): array|callable
     {
         return [
-            'active' => self::faker()->randomNumber(),
+            'active' => self::faker()->numberBetween(0, 1),
             'arrivalAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
-            'contract' => self::faker()->text(255),
-            'email' => self::faker()->text(255),
-            'firstname' => self::faker()->text(255),
-            'lastname' => self::faker()->text(255),
-            'password' => self::faker()->text(255),
-            'role' => self::faker()->randomNumber(),
+            'contract' => self::faker()->randomElement(['CDI', 'CDD']),
+            'email' => self::faker()->unique()->email,
+            'firstname' => self::faker()->firstName,
+            'lastname' => self::faker()->lastName,
+            'password' => self::faker()->password,
+            'role' => self::faker()->numberBetween(0, 1),
         ];
     }
 

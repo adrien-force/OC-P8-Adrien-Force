@@ -45,7 +45,7 @@ class Project
     /**
      * @var Collection<int, Employe>
      */
-    #[ORM\ManyToMany(targetEntity: Employe::class, mappedBy: 'projects', cascade: ['persist'])]
+    #[ORM\ManyToMany(targetEntity: Employe::class, mappedBy: 'projects')]
     private Collection $employes;
 
     public function __construct()
