@@ -56,6 +56,12 @@ class ProjectController extends AbstractController
         if (!$project) {
             return $this->redirectToRoute('app_project');
         }
+
+        //must delete all tasks before deleting the project because of the foreign key constraint
+        foreach ($project->getTasks() as $task) {
+            $em->remove($task);
+        }
+
         $em->remove($project);
         $em->flush();
         return $this->redirectToRoute('app_project');
