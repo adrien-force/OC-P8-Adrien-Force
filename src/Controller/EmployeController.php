@@ -40,6 +40,7 @@ class EmployeController extends AbstractController
             $em->persist($employe);
             $em->flush();
             $this->addFlash('success', 'Le collaborateur a bien été mis à jour.');
+            return $this->redirectToRoute('app_employe_index');
 
             //Show a popup message to confirm the update to the user
         }
