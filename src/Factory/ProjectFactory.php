@@ -2,8 +2,8 @@
 namespace App\Factory;
 
 use App\Entity\Project;
+use DateTimeImmutable;
 use Zenstruck\Foundry\ModelFactory;
-use Zenstruck\Foundry\Proxy;
 
 final class ProjectFactory extends ModelFactory
 {
@@ -11,8 +11,8 @@ final class ProjectFactory extends ModelFactory
     {
         return [
             'name' => self::faker()->word(),
-            'startAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
-            'deadline' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
+            'startAt' => DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
+            'deadline' => DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
             'archived' => self::faker()->boolean(),
             'tasks' => TaskFactory::new()->many(3),
             'status' => StatusFactory::randomOrCreate(),

@@ -27,7 +27,7 @@ class ProjectController extends AbstractController
         ]);
     }
 
-    #[Route('/project/{id}', name: 'app_project_show', requirements: ['projectId' => '\d+'])]
+    #[Route('/project/{id}', name: 'app_project_show')]
     public function show
     (
         StatusRepository  $statusRepository,
@@ -43,7 +43,6 @@ class ProjectController extends AbstractController
         return $this->render('project/project.html.twig', [
             'controller_name' => 'ProjectController',
             'project' => $project,
-//            'tasks' => $projectRepository->find($projectId)->getTasks(),
             'status' => $statusRepository->findAll()
         ]);
     }
