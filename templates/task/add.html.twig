@@ -64,7 +64,7 @@
                     <button class="button button-submit">Ajouter</button>
                     {% if task.id %}
                         <br>
-                        <a href="{{ path('app_task_delete', {'taskId': task.id}) }}" class="delete-task">Supprimer la tâche </a>
+                        <a href="{{ path('app_task_delete', {id: task.id}) }}" class="delete-task">Supprimer la tâche </a>
                     {% endif %}
                 </form>
                 {{ form_end(form) }}

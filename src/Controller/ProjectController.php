@@ -27,32 +27,35 @@ class ProjectController extends AbstractController
         ]);
     }
 
-    #[Route('/project/{projectId}', name: 'app_project_show', requirements: ['projectId' => '\d+'])]
+    #[Route('/project/{id}', name: 'app_project_show', requirements: ['projectId' => '\d+'])]
     public function show
     (
-        ProjectRepository $projectRepository,
         StatusRepository  $statusRepository,
-        int               $projectId,
+        Project               $project,
     ): Response
     {
-        if (!$projectRepository->find($projectId) ||
+        if (!$project ||
             !$statusRepository->findAll()) {
             return $this->redirectToRoute('app_project');
         }
 
 
-
         return $this->render('project/project.html.twig', [
             'controller_name' => 'ProjectController',
-            'project' => $projectRepository->find($projectId),
+            'project' => $project,
+//            'tasks' => $projectRepository->find($projectId)->getTasks(),
             'status' => $statusRepository->findAll()
         ]);
     }
 
-    #[Route('/project/{projectId}/remove', name: 'app_project_remove')]
-    public function remove(ProjectRepository $projectRepository, int $projectId, EntityManagerInterface $em): Response
+    #[Route('/project/{id}/remove', name: 'app_project_remove')]
+    public function remove
+    (
+        ProjectRepository $projectRepository,
+        Project $project,
+        EntityManagerInterface $em
+    ): Response
     {
-        $project = $projectRepository->find($projectId);
         if (!$project) {
             return $this->redirectToRoute('app_project');
         }
@@ -67,14 +70,13 @@ class ProjectController extends AbstractController
         return $this->redirectToRoute('app_project');
     }
 
-    #[Route('/project/edit/{projectId}', name: 'app_project_edit')]
+    #[Route('/project/edit/{id}', name: 'app_project_edit')]
     public function edit(
         ProjectRepository      $projectRepository,
-        int                    $projectId,
+        Project                    $project,
         EntityManagerInterface $em,
         Request                $request,
     ): Response {
-        $project = $projectRepository->find($projectId);
         if (!$project) {
             throw $this->createNotFoundException('The project does not exist');
         }
@@ -85,7 +87,7 @@ class ProjectController extends AbstractController
             $em->persist($project);
             $em->flush();
 
-            return $this->redirectToRoute('app_project_show', ['projectId' => $projectId]);
+            return $this->redirectToRoute('app_project_show', ['id' => $project->getId()]);
         }
         return $this->render('project/edit.html.twig', [
             'form' => $form->createView(),
@@ -95,7 +97,7 @@ class ProjectController extends AbstractController
 
 
 
-    #[Route('/project/add', name: 'app_project_add')]
+    #[Route('/add/project', name: 'app_project_add')]
     public function add
     (
         Request                $request,
@@ -109,7 +111,7 @@ class ProjectController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($project);
             $em->flush();
-            return $this->redirectToRoute('app_project'); //TODO redirect to project show id
+            return $this->redirectToRoute('app_project');
         }
 
         return $this->render('project/add.html.twig', [

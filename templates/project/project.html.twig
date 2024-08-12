@@ -16,7 +16,7 @@
                             <div class="avatar"> {{ employe.initials }}</div>
                             {% endfor %}
                         </div>
-                        <a class="button" href=" {{ path('app_project_edit', {projectId: project.id}) }}">Modifier</a>
+                        <a class="button" href=" {{ path('app_project_edit', {id: project.id}) }}">Modifier</a>
                     </div>
                 </div>
             </header>
@@ -28,7 +28,7 @@
                             <div class="tasks-list">
                                 {% for task in project.tasks %}
                                     {% if task.status.id == stati.id %}
-                                    <a class="task" href="{{ path('app_project_task_edit', {projectId: project.id, taskId: task.id}) }}">
+                                    <a class="task" href="{{ path('app_project_task_edit', {id: task.id}) }}">
                                         <h3>{{ task.title }}</h3>
                                         <p>{{ task.description }}</p>
                                         <div class="task-infos">
@@ -46,7 +46,7 @@
                                     </a>
                                     {% endif %}
                                 {% endfor %}
-                                <a href="{{ path('app_project_task_edit', {projectId: project.id}) }}" class="task-add">
+                                <a href="{{ path('app_project_task_add', {id: project.id}) }}" class="task-add">
                                     + Ajouter une tâche
                                 </a>
                             </div>

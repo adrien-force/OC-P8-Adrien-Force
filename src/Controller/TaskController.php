@@ -22,27 +22,19 @@ class TaskController extends AbstractController
         ]);
     }
 
-    #[Route('/task/edit/{projectId}/{taskId}', name: 'app_project_task_edit')]
-    public function add
-    (
-        Request        $request,
+    #[Route('/task/edit/{id}', name: 'app_project_task_edit')]
+    public function edit(
+        Request $request,
         EntityManagerInterface $em,
-        int            $taskId = null,
-        int            $projectId = null
-    )
-    {
-        $task = $taskId ? $em->getRepository(Task::class)->find($taskId) : new Task();
-        
-        $project = $em->getRepository(Project::class)->find($projectId);
-        $task->setProject($project);
-
+        Task $task
+    ): Response {
         $form = $this->createForm(TaskAddType::class, $task);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($task);
             $em->flush();
-            $this->redirectToRoute('app_project_show', ['projectId' => $projectId]);
+            return $this->redirectToRoute('app_project_show', ['id' => $task->getProject()->getId()]);
         }
 
         return $this->render('task/add.html.twig', [
@@ -51,17 +43,42 @@ class TaskController extends AbstractController
         ]);
     }
 
-    #[Route('/task/delete/{taskId}', name: 'app_task_delete')]
+    #[Route('/task/add/{id}', name: 'app_project_task_add')]
+    public function add
+    (
+        Request        $request,
+        EntityManagerInterface $em,
+        Project            $project
+    )
+    {
+        $task = new Task();
+        $task->setProject($project);
+
+        $form = $this->createForm(TaskAddType::class, $task);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($task);
+            $em->flush();
+            return $this->redirectToRoute('app_project_show', ['id' => $project->getId()]);
+        }
+
+        return $this->render('task/add.html.twig', [
+            'form' => $form->createView(),
+            'task' => $task
+        ]);
+    }
+
+    #[Route('/task/delete/{id}', name: 'app_task_delete')]
     public function delete
     (
         EntityManagerInterface $em,
-        int            $taskId
+        Task            $task
     ) : Response
     {
-        $task = $em->getRepository(Task::class)->find($taskId);
         $projectId = $task->getProject()->getId();
         $em->remove($task);
         $em->flush();
-        return $this->redirectToRoute('app_project_show', ['projectId' => $projectId]);
+        return $this->redirectToRoute('app_project_show', ['id' => $projectId]);
     }
 }
